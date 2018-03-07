@@ -1,5 +1,7 @@
 package arrayIndexList;
 
+import java.util.Arrays;
+
 import indexList.IndexList;
 
 public class ArrayIndexList<E> implements IndexList<E> {
@@ -30,13 +32,22 @@ public class ArrayIndexList<E> implements IndexList<E> {
 
 
 	public void add(E e) {
-		// ADD CODE AS REQUESTED BY EXERCISES
+		if(element.length == size) {
+			changeCapacity(CAPTOAR);
+			
+			}
+			element[size]=e;
+			size++;
 	}
 
 
 	public E get(int index) throws IndexOutOfBoundsException {
-		// ADD AND MODIGY CODE AS REQUESTED BY EXERCISES
-		return null; 
+		if( index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException("The specified index is invalid");
+		}
+		
+		return element[index]; 
+	 
 	}
 
 
@@ -46,14 +57,30 @@ public class ArrayIndexList<E> implements IndexList<E> {
 
 
 	public E remove(int index) throws IndexOutOfBoundsException {
-		// ADD AND MODIFY CODE AS REQUESTED BY EXERCISES
-		return null;
+		if( index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException("The specified index is invalid");
+		}
+			if(element.length-size == MAXEMPTYPOS) {
+				changeCapacity(-CAPTOAR);
+				
+			}
+		
+			
+			E temp = element[index];
+			moveDataOnePositionTL(index+1, size-1);
+			size--;
+			element[size]=null;		
+			return temp;
 	}
 
 
 	public E set(int index, E e) throws IndexOutOfBoundsException {
-		// ADD AND MODIFY CODE AS REQUESTED BY EXERCISES
-		return null;
+		if( index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException("The specified index is invalid");
+		}		
+			E temp =element[index];
+			element[index]=e;
+			return temp;
 	}
 
 
@@ -99,14 +126,28 @@ public class ArrayIndexList<E> implements IndexList<E> {
 	// The following two methods are to be implemented as part of an exercise
 	public Object[] toArray() {
 		// TODO es in Exercise 3
-		return null;
+		return Arrays.copyOf(element, size);
 	}
 
 
 	@Override
 	public <T1> T1[] toArray(T1[] array) {
 		// TODO as in Exercise 3
-		return null;
+		if (array.length < size)
+		    return (T1[]) Arrays.copyOf(element, size, array.getClass());
+			System.arraycopy(element, 0, array, 0, size);
+			if (array.length > size)
+				for(int i=size;i<array.length;i++) {
+					array[i]= null;
+				}
+			return array;
 	}
+	
+	
+	@Override
+	public int capacity() {
+		return element.length;
+	}
+	
 
 }
