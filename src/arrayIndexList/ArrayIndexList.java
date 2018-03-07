@@ -13,7 +13,7 @@ public class ArrayIndexList<E> implements IndexList<E> {
 
 	public ArrayIndexList() { 
 		element = (E[]) new Object[INITCAP]; 
-		size = 0; 
+		size = 0 ; 
 	} 
 	
 
@@ -28,6 +28,7 @@ public class ArrayIndexList<E> implements IndexList<E> {
 		moveDataOnePositionTR(index,size-1 );
 			element[index]=e;
 			size++;
+			
 	}
 
 
@@ -36,6 +37,7 @@ public class ArrayIndexList<E> implements IndexList<E> {
 			changeCapacity(CAPTOAR);
 			
 			}
+		
 			element[size]=e;
 			size++;
 	}
